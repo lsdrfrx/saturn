@@ -3,7 +3,6 @@
 #include <ncurses.h>
 #include <string>
 #include <vector>
-#include <iostream>
 
 #define LINE_NUMBERS_WIDTH 8
 #define WORKSPACE_PADDING 1
