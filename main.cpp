@@ -1,6 +1,9 @@
+#include <cstring>
+#include <fstream>
 #include <ncurses.h>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #define LINE_NUMBERS_WIDTH 8
 #define WORKSPACE_PADDING 1
@@ -37,17 +40,26 @@ void draw_status_bar(State& state);
 void draw_line_numbers(State& state);
 void draw_workspace(State& state);
 void process_keyboard_events(State& state);
-unsigned int count_line_length(State &state);
-unsigned int count_lines(State &state);
+void load_file(State& state);
+unsigned int count_line_length(State& state);
+unsigned int count_lines(State& state);
 
 
-int main() {
+int main(int argc, char** argv) {
   setlocale(LC_ALL, "");
 
   State state;
 
-  for (int i = 0; i < 15; i++) {
-    state.buffer.push_back("test string");
+  std::ifstream f;
+  f.open(argv[1]);
+  if (f.is_open()) {
+    string line;
+
+    while (std::getline(f, line)) {
+      state.buffer.push_back(line);
+    }
+
+    f.close();
   }
 
   init_curses();
